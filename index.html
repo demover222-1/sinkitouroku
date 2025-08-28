@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お客様情報登録フォーム</title>
+<style>
+  body {
+    margin: 0;
+    padding: 20px;
+    font-family: sans-serif;
+    background-color: #f9f9f9;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .page { display: none; }
+  .active { display: block; }
+  form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+  }
+  input, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  button:hover:not(:disabled) {
+    background-color: #0056b3;
+    color: white;
+  }
+  .page-title { text-align: center; margin-top: 20px; font-size: 24px; color: #0f172a; }
+  #completion-page {
+    display: none;
+    height: 100vh;
+    background-color: #f9f9f9;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 24px;
+    color: #16a34a;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  #error-message { display: none; color: #dc2626; text-align: center; margin-top: 20px; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div id="form-page" class="page active">
+  <h2 class="page-title">お客様情報登録フォーム</h2>
+  <form id="customer-form">
+    <label for="firstName">氏名</label>
+    <input type="text" id="firstName" name="firstName" placeholder="山田 太郎" required />
+
+    <label for="fullName">フルネーム</label>
+    <input type="text" id="fullName" name="fullName" placeholder="ヤマダ タロウ" required />
+
+    <label for="phone">電話番号</label>
+    <input type="tel" id="phone" name="phone" pattern="[0-9\-]+" placeholder="090-1234-5678" required />
+
+    <input type="hidden" id="userId" name="userId" value="" />
+
+    <button type="submit">送信</button>
+  </form>
+  <div id="error-message">送信できませんでした。もう一度お試しください。</div>
+</div>
+
+<div id="completion-page">
+  登録が完了しました！<br>ご予約の方はメニューボタンから「予約する」を選択してください。
+</div>
+
+<script>
+const webhookURL = "https://hook.eu2.make.com/za54bnynu8rzqnozy9kryxoowg8b1w9b";
+
+// URLパラメータからuserIdを取得
+window.onload = function() {
+  const params = new URLSearchParams(window.location.search);
+  const userId = params.get("userId");
+  if (userId) {
+    document.getElementById("userId").value = userId;
+  }
+};
+
+const form = document.getElementById("customer-form");
+const errorMessage = document.getElementById("error-message");
+const formPage = document.getElementById("form-page");
+const completionPage = document.getElementById("completion-page");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  errorMessage.style.display = "none";
+
+  const submitBtn = form.querySelector("button");
+
+  // 連打防止
+  submitBtn.disabled = true;
+  submitBtn.textContent = "送信中...";
+
+  const formData = new FormData(form);
+  const data = {
+    userId: formData.get("userId"),
+    firstName: formData.get("firstName"),
+    fullName: formData.get("fullName"),
+    phone: formData.get("phone")
+  };
+
+  try {
+    await fetch(webhookURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    // 成功 → 完了画面に切替
+    formPage.classList.remove("active");
+    completionPage.style.height = window.innerHeight + "px";
+    completionPage.style.display = "flex";
+
+  } catch(err) {
+    console.error("送信エラー:", err);
+    errorMessage.style.display = "block";
+
+    // 失敗 → ボタンを元に戻してフォームはそのまま
+    submitBtn.disabled = false;
+    submitBtn.textContent = "送信";
+  }
+});
+</script>
+
+</body>
+</html>
