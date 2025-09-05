@@ -5,32 +5,46 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>お客様情報登録フォーム</title>
 <style>
-  body {
-    margin: 0;
-    padding: 20px;
-    font-family: sans-serif;
-    background-color: #f9f9f9;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center; /* 横中央 */
+  align-items: center;     /* 縦中央 */
+  height: 100vh;           /* 画面全体の高さ */
+}
   .page { display: none; }
   .active { display: block; }
-  form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background: #fff;
-  }
+form {
+  width: 90vw;        /* 横幅は画面の90% */
+  max-width: 90vw;
+  height: 80vh;       /* 縦幅は画面の80% */
+  min-height: 400px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start; /* 入力欄を左寄せに */
+}
+
   input, button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 16px;
-    box-sizing: border-box;
-  }
+  width: 100%;          /* 立幅を少し狭く */
+  padding: 0.8em;      /* 高さは大きめ */
+  margin-top: 10px;
+  font-size: 3vh;      /* 山田太郎とかの中の文字サイズ */
+  box-sizing: border-box;
+  margin-bottom: 12px; /* 入力欄同士の間隔*/
+}
+
+ label{
+   font-size: 3.5vh;
+   margin-bottom: 4px; /* ラベルと入力欄の間隔*/
+ }
   button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
@@ -39,7 +53,15 @@
     background-color: #0056b3;
     color: white;
   }
-  .page-title { text-align: center; margin-top: 20px; font-size: 24px; color: #0f172a; }
+
+  .page-title {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 5vh;     
+    color: #0f172a;
+    line-height: 1.1;
+  }
+
   #completion-page {
     display: none;
     height: 100vh;
@@ -48,12 +70,15 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-size: 24px;
+    font-size: 20px;
     color: #16a34a;
     padding: 20px;
     box-sizing: border-box;
   }
   #error-message { display: none; color: #dc2626; text-align: center; margin-top: 20px; font-weight: bold; }
+
+
+
 </style>
 </head>
 <body>
@@ -70,7 +95,7 @@
     <label for="phone">電話番号</label>
     <input type="tel" id="phone" name="phone" pattern="[0-9\-]+" placeholder="090-1234-5678" required />
 
-    <input type="hidden" id="userId" name="userId" value="" />
+
 
     <button type="submit">送信</button>
   </form>
@@ -78,12 +103,15 @@
 </div>
 
 <div id="completion-page">
-  登録が完了しました！<br>ご予約の方はメニューボタンから「予約する」を選択してください。
+  登録が完了しました！<br>ご予約の方はメニューボタンから<br>「予約する」を選択してください。
 </div>
 
 <script>
-const webhookURL = "https://reservations.thinklayer.jp/";
 
+const form = document.getElementById("customer-form");
+const errorMessage = document.getElementById("error-message");
+const formPage = document.getElementById("form-page");
+const completionPage = document.getElementById("completion-page");
 // URLパラメータからuserIdを取得
 window.onload = function() {
   const params = new URLSearchParams(window.location.search);
@@ -91,13 +119,8 @@ window.onload = function() {
   if (userId) {
     document.getElementById("userId").value = userId;
   }
-};
 
-const form = document.getElementById("customer-form");
-const errorMessage = document.getElementById("error-message");
-const formPage = document.getElementById("form-page");
-const completionPage = document.getElementById("completion-page");
-
+//===============送信に関して=================================================================================
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   errorMessage.style.display = "none";
@@ -108,46 +131,34 @@ form.addEventListener("submit", async (e) => {
   submitBtn.disabled = true;
   submitBtn.textContent = "送信中...";
 
+  //送信ボタンについて
   const formData = new FormData(form);
   const data = {
-    action: "formSubmission",
-    userId: formData.get("userId"),
+    userId: userId,
     firstName: formData.get("firstName"),
     fullName: formData.get("fullName"),
     phone: formData.get("phone")
   };
 
+  // ======= ここで即完了画面表示 =======
+  formPage.classList.remove("active");
+  completionPage.style.height = window.innerHeight + "px";
+  completionPage.style.display = "flex";
+
+  // ======= GAS へ非同期送信 =======
   try {
-console.log("送信データ:", data);  // ブラウザのコンソールに送信データを出す
-
-await fetch(webhookURL, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify(data)
-});
-
-
-    // 成功 → 完了画面に切替
-    formPage.classList.remove("active");
-    completionPage.style.height = window.innerHeight + "px";
-    completionPage.style.display = "flex";
-
+  await fetch("https://reservations.thinklayer.jp/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
   } catch(err) {
-    console.error("送信エラー:", err);
+    console.error("予期せぬエラー:", err);
     errorMessage.style.display = "block";
-
-    // 失敗 → ボタンを元に戻してフォームはそのまま
-    submitBtn.disabled = false;
-    submitBtn.textContent = "送信";
   }
+
 });
+
 </script>
-
 </body>
-
 </html>
-
-
-
-
-
