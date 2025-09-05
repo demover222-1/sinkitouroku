@@ -118,6 +118,17 @@ form.addEventListener("submit", async (e) => {
   };
 
   try {
+          console.log("送信データ:", data);
+        await fetch(webhookURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+        await fetch(webhookURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
     await fetch(webhookURL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -143,6 +154,7 @@ form.addEventListener("submit", async (e) => {
 </body>
 
 </html>
+
 
 
 
