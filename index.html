@@ -110,6 +110,7 @@ form.addEventListener("submit", async (e) => {
 
   const formData = new FormData(form);
   const data = {
+    action: "formSubmission",
     userId: formData.get("userId"),
     firstName: formData.get("firstName"),
     fullName: formData.get("fullName"),
@@ -142,5 +143,6 @@ form.addEventListener("submit", async (e) => {
 </body>
 
 </html>
+
 
 
