@@ -116,9 +116,6 @@ const completionPage = document.getElementById("completion-page");
 window.onload = function() {
   const params = new URLSearchParams(window.location.search);
   const userId = params.get("userId");
-  if (userId) {
-    document.getElementById("userId").value = userId;
-  }
 
 //===============送信に関して=================================================================================
 form.addEventListener("submit", async (e) => {
@@ -162,4 +159,5 @@ form.addEventListener("submit", async (e) => {
 </script>
 </body>
 </html>
+
 
