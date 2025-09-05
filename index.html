@@ -118,22 +118,14 @@ form.addEventListener("submit", async (e) => {
   };
 
   try {
-          console.log("送信データ:", data);
-        await fetch(webhookURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-        await fetch(webhookURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-    await fetch(webhookURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
+console.log("送信データ:", data);  // ブラウザのコンソールに送信データを出す
+
+await fetch(webhookURL, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(data)
+});
+
 
     // 成功 → 完了画面に切替
     formPage.classList.remove("active");
@@ -154,6 +146,7 @@ form.addEventListener("submit", async (e) => {
 </body>
 
 </html>
+
 
 
 
