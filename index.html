@@ -116,6 +116,7 @@ const completionPage = document.getElementById("completion-page");
 window.onload = function() {
   const params = new URLSearchParams(window.location.search);
   const userId = params.get("userId");
+  const webappurl = params.get("webappurl");
 
 //===============送信に関して=================================================================================
 form.addEventListener("submit", async (e) => {
@@ -132,6 +133,7 @@ form.addEventListener("submit", async (e) => {
   const formData = new FormData(form);
   const data = {
     sinkitouroku: true,
+    webappurl: webappurl,
     userId: userId,
     firstName: formData.get("firstName"),
     fullName: formData.get("fullName"),
@@ -160,6 +162,7 @@ form.addEventListener("submit", async (e) => {
 </script>
 </body>
 </html>
+
 
 
 
