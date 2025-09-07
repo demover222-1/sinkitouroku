@@ -131,6 +131,7 @@ form.addEventListener("submit", async (e) => {
   //送信ボタンについて
   const formData = new FormData(form);
   const data = {
+    sinkitouroku: true,
     userId: userId,
     firstName: formData.get("firstName"),
     fullName: formData.get("fullName"),
@@ -159,5 +160,6 @@ form.addEventListener("submit", async (e) => {
 </script>
 </body>
 </html>
+
 
 
