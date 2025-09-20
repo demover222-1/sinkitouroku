@@ -1,0 +1,94 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  background-color: #111111; /* 黒背景でラグジュアリー感 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #ffffff;
+}
+
+.page { display: none; }
+.active { display: block; }
+
+form {
+  width: 90vw;
+  max-width: 450px;
+  padding: 30px;
+  border-radius: 20px;
+  background: #ffffff; /* 白フォームでコントラスト */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4); /* 黒背景に映える強めのシャドウ */
+  border: 2px solid #d4af37; /* ゴールドの縁 */
+}
+
+input, button {
+  width: 100%;
+  padding: 12px 15px;
+  margin-top: 12px;
+  font-size: 1em;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  border: 1px solid #d4af37; /* ゴールドボーダーで統一 */
+  border-radius: 12px;
+  background: #ffffff; /* フォームと同系で上品に */
+  color: #111111;
+  font-weight: 500;
+}
+
+label {
+  font-size: 1.2em;
+  margin-bottom: 8px;
+  color: #333333;
+}
+
+button {
+  background: linear-gradient(135deg, #d4af37, #f8e5a1); /* ゴールドグラデーション */
+  color: #111111;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+button:disabled {
+  background-color: #f3e8c3;
+  cursor: not-allowed;
+}
+button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #b88f2c, #f1d77e);
+}
+
+.page-title {
+  text-align: center;
+  margin-top: 0;
+  font-size: 2em;
+  color: #d4af37; /* ゴールドタイトルでラグジュアリー感 */
+  line-height: 1.3;
+}
+
+#completion-page {
+  display: none;
+  height: 100vh;
+  background-color: #111111; /* 黒背景で統一 */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.2em;
+  color: #d4af37; /* ゴールド文字で統一 */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#error-message {
+  display: none;
+  color: #ff6b6b; /* 上品な赤 */
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+}
