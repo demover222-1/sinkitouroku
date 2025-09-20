@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
 <title>お客様情報登録フォーム</title>
 </head>
 
@@ -41,9 +40,24 @@ const formPage = document.getElementById("form-page");
 const completionPage = document.getElementById("completion-page");
 // URLパラメータからuserIdを取得
 window.onload = function() {
-  const params = new URLSearchParams(window.location.search);
-  const userId = params.get("userId");
-  const webappurl = params.get("webappurl");
+const params = new URLSearchParams(window.location.search);
+const userId = params.get("userId");
+const webappurl = params.get("webappurl");
+
+const cssFile = params.get("css"); // URLパラメータで指定されたCSSファイル名
+if (cssFile) {
+const link = document.createElement("link");
+link.rel = "stylesheet";
+link.href = cssFile; // 同じフォルダにある cssFile を読み込む
+document.head.appendChild(link);
+} else {
+  // デフォルト CSS
+const link = document.createElement("link");
+link.rel = "stylesheet";
+link.href = "style.css";
+document.head.appendChild(link);
+}
+
   
     const root = document.documentElement;
 
@@ -116,6 +130,7 @@ form.addEventListener("submit", async (e) => {
 </script>
 </body>
 </html>
+
 
 
 
