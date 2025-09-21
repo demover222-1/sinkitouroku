@@ -40,6 +40,7 @@ const formPage = document.getElementById("form-page");
 const completionPage = document.getElementById("completion-page");
 // URLパラメータからuserIdを取得
 window.onload = function() {
+const form = document.getElementById("customer-form"); 
 const params = new URLSearchParams(window.location.search);
 const userId = params.get("userId");
 const webappurl = params.get("webappurl");
@@ -130,6 +131,7 @@ form.addEventListener("submit", async (e) => {
 </script>
 </body>
 </html>
+
 
 
 
