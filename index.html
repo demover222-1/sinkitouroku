@@ -33,50 +33,43 @@
 </div>
 
 <script>
-
+const form = document.getElementById("customer-form");
 const errorMessage = document.getElementById("error-message");
 const formPage = document.getElementById("form-page");
 const completionPage = document.getElementById("completion-page");
-// URLパラメータからuserIdを取得
+
 window.onload = function() {
-const form = document.getElementById("customer-form"); 
-const params = new URLSearchParams(window.location.search);
-const userId = params.get("userId");
-const webappurl = params.get("webappurl");
+  const params = new URLSearchParams(window.location.search);
+  const userId = params.get("userId");
+  const webappurl = params.get("webappurl");
 
-const cssFile = params.get("css"); // URLパラメータで指定されたCSSファイル名
-if (cssFile) {
-const link = document.createElement("link");
-link.rel = "stylesheet";
-link.href = cssFile; // 同じフォルダにある cssFile を読み込む
-document.head.appendChild(link);
-} else {
-  // デフォルト CSS
-const link = document.createElement("link");
-link.rel = "stylesheet";
-link.href = "style.css";
-document.head.appendChild(link);
-}
+  // CSS 読み込み
+  const cssFile = params.get("css") || "style.css";
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = cssFile;
+  document.head.appendChild(link);
 
-  
-    const root = document.documentElement;
+  // カスタムカラー設定
+  const root = document.documentElement;
+  const colorMap = {
+    bodyColor: "--color-body",
+    inputButtonColor: "--color-input-button",
+    labelColor: "--color-label",
+    buttonTextColor: "--color-button-text",
+    pageTitleColor: "--color-page-title",
+    bodyBg: "--bg-body",
+    buttonBg: "--bg-button",
+    buttonHoverBg: "--bg-button-hover",
+    formBg: "--form-bg",
+    inputBg: "--input-bg",
+    inputFocusBorder: "--border-input-focus"
+  };
 
-  // 文字色
-	if (params.get('bodyColor')) root.style.setProperty('--color-body', params.get('bodyColor'));
-	if (params.get('inputButtonColor')) root.style.setProperty('--color-input-button', params.get('inputButtonColor'));
-	if (params.get('labelColor')) root.style.setProperty('--color-label', params.get('labelColor'));
-	if (params.get('buttonTextColor')) root.style.setProperty('--color-button-text', params.get('buttonTextColor'));
-	if (params.get('pageTitleColor')) root.style.setProperty('--color-page-title', params.get('pageTitleColor'));
+  for (const key in colorMap) {
+    if (params.get(key)) root.style.setProperty(colorMap[key], params.get(key));
+  }
 
-  // 背景
-	if (params.get('bodyBg')) root.style.setProperty('--bg-body', params.get('bodyBg'));
-	if (params.get('buttonBg')) root.style.setProperty('--bg-button', params.get('buttonBg'));
-	if (params.get('buttonHoverBg')) root.style.setProperty('--bg-button-hover', params.get('buttonHoverBg'));
-	if (params.get('formBg')) root.style.setProperty('--form-bg', params.get('formBg'));
-	if (params.get('inputBg')) root.style.setProperty('--input-bg', params.get('inputBg'));
-
-  // 枠線（フォーカス時）
-    if (params.get('inputFocusBorder')) root.style.setProperty('--border-input-focus', params.get('inputFocusBorder'));
   
 
 
@@ -130,6 +123,7 @@ form.addEventListener("submit", async (e) => {
 </script>
 </body>
 </html>
+
 
 
 
