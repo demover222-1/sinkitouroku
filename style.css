@@ -11,8 +11,8 @@
   /* 白ベースで清潔感 */
 
   /* --- フォーム背景 --- */
-  --form-bg: #ffffffF2;
-  /* 白に固定、95%不透明 */
+  --form-bg: #ffffffD9;
+  /* 白に固定、85%不透明 */
 
   /* --- 入力欄背景 --- */
   --input-bg: #faf7f3;
@@ -163,5 +163,6 @@ button:hover:not(:disabled) {
     padding: 15px;
   }
 }
+
 
 
