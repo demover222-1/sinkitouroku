@@ -76,6 +76,7 @@ input:focus {
   border-color: var(--border-input-focus);
   box-shadow: 0 0 8px rgba(247,191,160,0.5);
   outline: none;
+}
 
 label {
   font-size: 1.2em;
@@ -155,3 +156,4 @@ button:hover:not(:disabled) {
     padding: 15px;
   }
 }
+
