@@ -116,8 +116,8 @@ button:hover:not(:disabled) {
 
 #completion-page {
   display: none;
-  height: 100vh;
-  background: linear-gradient(to bottom, #fdfaf6, #f7f2ec);
+  height: 100vh;  
+  background: #f7f2ec;;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -162,3 +162,4 @@ button:hover:not(:disabled) {
     padding: 15px;
   }
 }
+
