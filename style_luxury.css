@@ -1,10 +1,10 @@
 :root {
   /* --- 文字色 --- */
-  --color-body: #ffffff;          /* 読みやすい落ち着いたグレー */
+  --color-body: #ffffff;          
   --color-input-button: #111111;  /* 入力欄・ボタン文字 */
-  --color-label: #6b5b4d;         /* やわらかいブラウン */
-  --color-button-text: #111111;   /* ボタン文字は白 */
-  --color-page-title: #d4af37;    /* タイトルも落ち着き */
+  --color-label: #6b5b4d;       
+  --color-button-text: #111111;  
+  --color-page-title: #d4af37;  
 
   /* --- 背景 --- */
   --bg-body: #111111;  
@@ -26,7 +26,7 @@
   /* ホバー時に少し濃く */
 
   /* --- 枠線 --- */
-  --border-input-focus: #bbfaf7;  /* フォーカス時に淡いピンク */
+  --border-input-focus: #f1d77e;
 }
 
 body {
