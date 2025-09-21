@@ -1,13 +1,44 @@
+:root {
+  /* --- 文字色 --- */
+  --color-body: #ffffff;          /* 読みやすい落ち着いたグレー */
+  --color-input-button: #111111;  /* 入力欄・ボタン文字 */
+  --color-label: #6b5b4d;         /* やわらかいブラウン */
+  --color-button-text: #111111;   /* ボタン文字は白 */
+  --color-page-title: #d4af37;    /* タイトルも落ち着き */
+
+  /* --- 背景 --- */
+  --bg-body: #111111;  
+  /* 白ベースで清潔感 */
+
+  /* --- フォーム背景 --- */
+  --form-bg: #ffffffcc;
+  /* 白に固定、95%不透明 */
+
+  /* --- 入力欄背景 --- */
+  --input-bg: #ffffff;
+  /* 乳白色 */
+
+  /* --- ボタン背景 --- */
+  --bg-button: #f8e5a1;  
+  /* 柔らかいピンク */
+
+  --bg-button-hover: #f1d77e;  
+  /* ホバー時に少し濃く */
+
+  /* --- 枠線 --- */
+  --border-input-focus: #bbfaf7;  /* フォーカス時に淡いピンク */
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: 'Helvetica Neue', 'Arial', sans-serif;
-  background-color: #111111; /* 黒背景でラグジュアリー感 */
+  background-color: var(--bg-body); /* 黒背景でラグジュアリー感 */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  color: #ffffff;
+  color: var(--color-body);
 }
 
 .page { display: none; }
@@ -18,7 +49,7 @@ form {
   max-width: 450px;
   padding: 30px;
   border-radius: 20px;
-  background: #ffffff; /* 白フォームでコントラスト */
+  background: var(--form-bg); /* 白フォームでコントラスト */
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -36,20 +67,25 @@ input, button {
   margin-bottom: 20px;
   border: 1px solid #d4af37; /* ゴールドボーダーで統一 */
   border-radius: 12px;
-  background: #ffffff; /* フォームと同系で上品に */
-  color: #111111;
+  background: var(--input-bg); /* フォームと同系で上品に */
+  color: var(--color-input-button);
   font-weight: 500;
 }
+
+input:focus {
+  border-color: var(--border-input-focus);
+  box-shadow: 0 0 8px rgba(247,191,160,0.5);
+  outline: none;
 
 label {
   font-size: 1.2em;
   margin-bottom: 8px;
-  color: #333333;
+  color: var(--color-label)#333333;
 }
 
 button {
-  background: linear-gradient(135deg, #d4af37, #f8e5a1); /* ゴールドグラデーション */
-  color: #111111;
+  background: var(--bg-button); /* ゴールドグラデーション */
+  color: var(--color-button-text);
   font-weight: bold;
   transition: 0.3s;
   cursor: pointer;
@@ -60,14 +96,14 @@ button:disabled {
   cursor: not-allowed;
 }
 button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #b88f2c, #f1d77e);
+  background: var(--bg-button-hover);
 }
 
 .page-title {
   text-align: center;
   margin-top: 0;
   font-size: 2em;
-  color: #d4af37; /* ゴールドタイトルでラグジュアリー感 */
+  color: var(--color-page-title); /* ゴールドタイトルでラグジュアリー感 */
   line-height: 1.3;
 }
 
@@ -91,4 +127,31 @@ button:hover:not(:disabled) {
   text-align: center;
   margin-top: 20px;
   font-weight: bold;
+}
+
+/* --- スマホ対応レスポンシブ --- */
+@media (max-width: 480px) {
+  form {
+    width: 90%;              /* 画面幅に合わせる */
+    padding: 20px;           /* 少し狭めのパディング */
+    border-radius: 16px;     
+  }
+
+  .page-title {
+    font-size: 1.6em;        /* 小さい画面でも文字が大きすぎない */
+  }
+
+  input, button {
+    font-size: 0.95rem;      /* フォントを少し小さく */
+    padding: 10px;           /* スマホ用に調整 */
+    max-width: 100%;         /* はみ出さないように */
+  }
+
+  body, #completion-page {
+    min-height: 100vh;       /* アドレスバーで高さが変動してもOK */
+  }
+
+  #completion-page {
+    padding: 15px;
+  }
 }
