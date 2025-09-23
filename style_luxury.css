@@ -1,0 +1,165 @@
+:root {
+  /* --- 文字色 --- */
+  --color-body: #ffffff;          
+  --color-input-button: #111111;  /* 入力欄・ボタン文字 */
+  --color-label: #6b5b4d;       
+  --color-button-text: #111111;  
+  --color-page-title: #d4af37;  
+
+  /* --- 背景 --- */
+  --bg-body: #111111;  
+  /* 白ベースで清潔感 */
+
+  /* --- フォーム背景 --- */
+  --form-bg: #ffffffD9;
+  /* 白に固定、85%不透明 */
+
+  /* --- 入力欄背景 --- */
+  --input-bg: #ffffff;
+  /* 乳白色 */
+
+  /* --- ボタン背景 --- */
+  --bg-button: #f8e5a1;  
+  /* 柔らかいピンク */
+
+  --bg-button-hover: #f1d77e;  
+  /* ホバー時に少し濃く */
+
+  /* --- 枠線 --- */
+  --border-input-focus: #f1d77e;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue', 'Arial', sans-serif;
+  background-color: var(--bg-body); /* 黒背景でラグジュアリー感 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: var(--color-body);
+
+  /* 背景はJSで設定するのでここでは初期値のみ */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.page { display: none; }
+.active { display: block; }
+
+form {
+  width: 90vw;
+  max-width: 450px;
+  padding: 30px;
+  border-radius: 20px;
+  background: var(--form-bg); /* 白フォームでコントラスト */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4); /* 黒背景に映える強めのシャドウ */
+  border: 2px solid #d4af37; /* ゴールドの縁 */
+}
+
+input, button {
+  width: 100%;
+  padding: 12px 15px;
+  margin-top: 12px;
+  font-size: 1em;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  border: 1px solid #d4af37; /* ゴールドボーダーで統一 */
+  border-radius: 12px;
+  background: var(--input-bg); /* フォームと同系で上品に */
+  color: var(--color-input-button);
+  font-weight: 500;
+}
+
+input:focus {
+  border-color: var(--border-input-focus);
+  box-shadow: 0 0 8px rgba(247,191,160,0.5);
+  outline: none;
+}
+
+label {
+  font-size: 1.2em;
+  margin-bottom: 8px;
+  color: var(--color-label)#333333;
+}
+
+button {
+  background: var(--bg-button); /* ゴールドグラデーション */
+  color: var(--color-button-text);
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+button:disabled {
+  background-color: #f3e8c3;
+  cursor: not-allowed;
+}
+button:hover:not(:disabled) {
+  background: var(--bg-button-hover);
+}
+
+.page-title {
+  text-align: center;
+  margin-top: 0;
+  font-size: 2em;
+  color: var(--color-page-title); /* ゴールドタイトルでラグジュアリー感 */
+  line-height: 1.3;
+}
+
+#completion-page {
+  display: none;
+  height: 100vh;
+  background-color: #111111; /* 黒背景で統一 */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.2em;
+  color: #d4af37; /* ゴールド文字で統一 */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#error-message {
+  display: none;
+  color: #ff6b6b; /* 上品な赤 */
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+/* --- スマホ対応レスポンシブ --- */
+@media (max-width: 480px) {
+  form {
+    width: 90%;              /* 画面幅に合わせる */
+    padding: 20px;           /* 少し狭めのパディング */
+    border-radius: 16px;     
+  }
+
+  .page-title {
+    font-size: 1.6em;        /* 小さい画面でも文字が大きすぎない */
+  }
+
+  input, button {
+    font-size: 0.95rem;      /* フォントを少し小さく */
+    padding: 10px;           /* スマホ用に調整 */
+    max-width: 100%;         /* はみ出さないように */
+  }
+
+  body, #completion-page {
+    min-height: 100vh;       /* アドレスバーで高さが変動してもOK */
+  }
+
+  #completion-page {
+    padding: 15px;
+  }
+}
+
