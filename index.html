@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お客様情報登録フォーム</title>
+</head>
+
+<body>
+
+<div id="form-page" class="page active">
+  <h2 class="page-title">お客様情報登録フォーム</h2>
+  <form id="customer-form">
+    <label for="firstName">氏名</label>
+    <input type="text" id="firstName" name="firstName" placeholder="山田 太郎" required />
+
+    <label for="fullName">フルネーム</label>
+    <input type="text" id="fullName" name="fullName" placeholder="ヤマダ タロウ" required />
+
+    <label for="phone">電話番号</label>
+    <input type="tel" id="phone" name="phone" pattern="[0-9\-]+" placeholder="090-1234-5678" required />
+
+
+
+    <button type="submit">送信</button>
+  </form>
+  <div id="error-message">送信できませんでした。もう一度お試しください。</div>
+</div>
+
+<div id="completion-page">
+ <div class="completion-box">
+  登録が完了しました！<br>ご予約の方はメニューボタンから<br>「予約する」を選択してください。
+ </div>
+</div>
+
+<script>
+const form = document.getElementById("customer-form");
+const errorMessage = document.getElementById("error-message");
+const formPage = document.getElementById("form-page");
+const completionPage = document.getElementById("completion-page");
+
+window.onload = function() {
+  const params = new URLSearchParams(window.location.search);
+  const userId = params.get("userId");
+  const webappurl = params.get("webappurl");
+
+  // CSS 読み込み
+  const cssFile = params.get("css") || "style.css";
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = cssFile;
+  document.head.appendChild(link);
+
+  // カスタムカラー設定
+  const root = document.documentElement;
+  const colorMap = {
+				pageTitleColor: "--color-page-title",
+				labelColor: "--color-label",
+				colorInputPlaceholder: "--color-input-placeholder",
+				colorInputText: "--color-input-text",
+				formBg: "--form-bg",
+				inputBg: "--input-bg",
+				buttonTextColor: "--color-button-text",
+				buttonBg: "--bg-button",
+				borderInput: "--border-input",
+				inputFocusBorder: "--border-input-focus"
+  };
+
+  for (const key in colorMap) {
+    if (params.get(key)) root.style.setProperty(colorMap[key], params.get(key));
+  }
+  
+//～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
+    //　--- 背景画像設定 --- //
+  const bgImageParam = params.get("bgimage"); // URLパラメータ名を「bgimage」に設定
+  const body = document.body;
+
+  if(bgImageParam && bgImageParam.trim() !== ""){
+    // URLパラメータがある場合はそのURLを使用
+	   body.style.background = `url("${bgImageParam}") no-repeat center center fixed`;
+	} else {
+	  // bgimageが無い場合
+	  if (cssFile === "style_huwa.css") {
+		// huwa の場合
+		body.style.background = 'url("background-huwa.jpg") no-repeat center center fixed';
+	  } else if (cssFile === "style_luxury.css") {
+		// luxury の場合
+		body.style.background = 'url("background-luxury.jpg") no-repeat center center fixed';
+	  } else {
+		// その他
+		body.style.background = 'url("background.jpg") no-repeat center center fixed';
+	  }
+	}
+body.style.backgroundSize = "cover";
+//～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
+
+//===============送信に関して=================================================================================
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  errorMessage.style.display = "none";
+
+  const submitBtn = form.querySelector("button");
+
+  // 連打防止
+  submitBtn.disabled = true;
+  submitBtn.textContent = "送信中...";
+
+  //送信ボタンについて
+  const formData = new FormData(form);
+  const data = {
+    sinkitouroku: true,
+    webappurl: webappurl,
+    userId: userId,
+    firstName: formData.get("firstName"),
+    fullName: formData.get("fullName"),
+    phone: formData.get("phone")
+  };
+
+  // ======= ここで即完了画面表示 =======
+  formPage.classList.remove("active");
+  completionPage.style.height = window.innerHeight + "px";
+  completionPage.style.display = "flex";
+
+  // ======= GAS へ非同期送信 =======
+  try {
+  await fetch("https://reservations.thinklayer.jp/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+  } catch(err) {
+    console.error("予期せぬエラー:", err);
+    errorMessage.style.display = "block";
+  }
+
+});
+};
+</script>
+</body>
+</html>

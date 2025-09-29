@@ -1,0 +1,195 @@
+/* 新規登録 */
+
+:root {
+  /* --- 文字色 --- */
+  --color-page-title: #ffa1f8;     /* タイトルと完了ページ */
+  --color-label: #6b5b4d;          /* 氏名・フルネーム・電話番号 */
+  --color-input-placeholder: #a8a8a8D9; /* 入力欄内 */
+  --color-input-text: #000000;     /* 入力後 */
+
+  /* --- 背景 --- */
+  --form-bg: #ffffffD9;            /* フォーム */
+  --input-bg: #faf7f3;             /* 入力欄 */
+
+  /* --- ボタン --- */
+  --color-button-text: #ffffff;    /* 文字色 */
+  --bg-button: #f8d9e1;            /* 背景色 */
+
+  /* --- 枠線 --- */
+  --border-input: #f8d9e1;         /* 選択前・枠線色 */
+  --border-input-focus: #f6c7d6;   /* 選択後・枠線色 */
+
+}
+
+
+
+/* --- 基本スタイル --- */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Rounded Mplus 1c', 'Arial', sans-serif; /* 外部参照なし */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  /* 背景はJSで設定するのでここでは初期値のみ */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.page { display: none; }
+.active { display: block; }
+
+form {
+  width: 90vw;
+  max-width: 450px;
+  padding: 25px;
+  border: none;
+  border-radius: 20px;
+  background: var(--form-bg); /* 半透明の白でふんわり */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+}
+
+input, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 1em;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  border: 1px solid var(--border-input);
+  border-radius: 12px;
+  background: var(--input-bg);
+  color: var(--color-input-text);
+}
+
+input::placeholder {                   /*入力欄内の山田太郎やヤマダタロウ等の色*/
+  color: var(--color-input-placeholder);
+}
+
+
+input:focus {
+  border-color: var(--border-input-focus);
+  box-shadow: 0 0 8px rgba(247,191,160,0.5);
+  outline: none;
+}
+
+label {
+  font-size: 1.2em;
+  margin-bottom: 6px;
+  color: var(--color-label);
+}
+
+button {
+  background: var(--bg-button); /* 水色系ボタン */
+  color: var(--color-button-text);
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #c4e1f7;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+  background: var(--bg-button);
+}
+
+.page-title {
+  text-align: center;
+  margin-top: 0;
+  font-size: 2em;
+  color: var(--color-page-title);
+  line-height: 1.3;
+
+  text-shadow:
+    -2px -2px 3px #ffffffd9,
+     2px -2px 3px #ffffffd9,
+    -2px  2px 3px #ffffffd9,
+     2px  2px 3px #ffffffd9;
+}
+
+
+#completion-page {
+  display: none;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.1em;
+  padding: 20px;
+  box-sizing: border-box;
+
+  text-shadow:
+    -2px -2px 3px #ffffffd9,
+     2px -2px 3px #ffffffd9,
+    -2px  2px 3px #ffffffd9,
+     2px  2px 3px #ffffffd9;
+
+}
+
+/* 半透明フォーム風のコンテナ */
+.completion-box {
+  max-width: 450px;
+  width: 90%;
+  padding: 25px;
+  border-radius: 20px;
+  background: var(--form-bg);     /* ← form と同じ半透明背景 */
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--color-page-title);
+  font-size: 1.1em;
+  text-shadow:
+    -2px -2px 3px #ffffffd9,
+     2px -2px 3px #ffffffd9,
+    -2px  2px 3px #ffffffd9,
+     2px  2px 3px #ffffffd9;
+}
+
+#error-message {
+  display: none;
+  color: #ff6b6b; /* 優しい赤 */
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+/* --- スマホ対応レスポンシブ --- */
+@media (max-width: 480px) {
+  form {
+    width: 90%;              /* 画面幅に合わせる */
+    padding: 20px;           /* 少し狭めのパディング */
+    border-radius: 16px;     
+  }
+
+  .page-title {
+    font-size: 1.6em;        /* 小さい画面でも文字が大きすぎない */
+  }
+
+  input, button {
+    font-size: 0.95rem;      /* フォントを少し小さく */
+    padding: 10px;           /* スマホ用に調整 */
+    max-width: 100%;         /* はみ出さないように */
+  }
+
+  body, #completion-page {
+    min-height: 100vh;       /* アドレスバーで高さが変動してもOK */
+  }
+
+  #completion-page {
+    padding: 15px;
+  }
+}
