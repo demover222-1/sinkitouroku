@@ -193,4 +193,26 @@ button:hover:not(:disabled) {
   #completion-page {
     padding: 15px;
   }
+
+}
+
+
+
+
+
+
+
+/* 設定用 */
+
+/* PC */
+body { font-size:16px; }
+
+/* タブレット */
+@media screen and (max-width: 1024px) {
+  body { font-size:14px; }
+}
+
+/* スマホ */
+@media screen and (max-width: 768px) {
+  body { font-size:12px; }
 }
