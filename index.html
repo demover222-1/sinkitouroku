@@ -44,6 +44,7 @@ window.onload = function() {
   const params = new URLSearchParams(window.location.search);
   const userId = params.get("userId");
   const webappurl = params.get("webappurl");
+  const sheetId = urlParams.get("sheetId");
 
   // CSS 読み込み
   const cssFile = params.get("css") || "style.css";
@@ -112,6 +113,7 @@ form.addEventListener("submit", async (e) => {
     sinkitouroku: true,
     webappurl: webappurl,
     userId: userId,
+	sheetId: sheetId,
     firstName: formData.get("firstName"),
     fullName: formData.get("fullName"),
     phone: formData.get("phone")
@@ -138,4 +140,5 @@ form.addEventListener("submit", async (e) => {
 };
 </script>
 </body>
+
 </html>
