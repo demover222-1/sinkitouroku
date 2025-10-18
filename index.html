@@ -44,7 +44,7 @@ window.onload = function() {
   const params = new URLSearchParams(window.location.search);
   const userId = params.get("userId");
   const webappurl = params.get("webappurl");
-  const sheetId = urlParams.get("sheetId");
+  const sheetId = params.get("sheetId");
 
   // CSS 読み込み
   const cssFile = params.get("css") || "style.css";
@@ -142,3 +142,4 @@ form.addEventListener("submit", async (e) => {
 </body>
 
 </html>
+
